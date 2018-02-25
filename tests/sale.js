@@ -1,5 +1,4 @@
 import increaseTime, { duration } from 'zeppelin-solidity/test/helpers/increaseTime';
-import moment from 'moment';
 
 
 var Token = artifacts.require("./McFlyToken.sol");
@@ -95,6 +94,12 @@ contract('Crowdsale', (accounts) => {
         token = await Token.at(await sale.token());
     })
   
+    it("running → check startTimeTLP2", async() => {
+        let date1 = (await sale.startTimeTLP2({from: owner}));
+        assert.notEqual(date1, null);
+        assert.equal(date1.toNumber() > 0, true);
+    });
+
     it("token.totalSupply → Check balance and totalSupply before donate", async () => {
         assert.equal((await token.balanceOf(client1)).toNumber(), 0, "balanceOf must be 0 on the start");
         assert.equal(
